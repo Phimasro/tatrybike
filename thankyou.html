@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ďakujeme za rezerváciu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #3CB371, #2E8B57);
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .checkmark {
+      font-size: 80px;
+      color: #fff;
+      animation: pop 0.6s ease forwards;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      70% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2em;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    p {
+      margin-top: 15px;
+      font-size: 1.2em;
+      animation: fadeIn 1.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 20px;
+      background: white;
+      color: #2E8B57;
+      font-weight: bold;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    a:hover {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="checkmark">✔️</div>
+  <h1>Ďakujeme za rezerváciu!</h1>
+  <p>Vaša požiadavka bola úspešne odoslaná. Čoskoro vás budeme kontaktovať.</p>
+
+  <a href="index.html">← Späť na hlavnú stránku</a>
+
+</body>
+</html>
