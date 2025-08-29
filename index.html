@@ -5,30 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TatryBike - Požičovňa bicyklov</title>
 <style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; }
-    header {
-        background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/51/High_Tatras_view_from_Kvetnica.jpg');
-        background-size: cover;
-        background-position: center;
-        color:white;
-        padding:80px 20px;
-        text-align:center;
-        text-shadow:2px 2px 4px rgba(0,0,0,0.7);
-    }
-    nav { background-color:#3CB371; padding:10px; text-align:center; }
-    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
-    .container { padding:20px; }
-    .bicycle-row { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-bottom:20px; }
-    .bicycle { border:1px solid #ccc; padding:15px; border-radius:8px; width:320px; text-align:center; }
-    .bicycle img { width:100%; height:250px; object-fit:contain; border-radius:5px; }
-    .reserve { background-color:#2E8B57; color:white; border:none; padding:12px 18px; cursor:pointer; border-radius:5px; margin-top:10px; font-size:16px; transition:0.3s; }
-    .reserve:hover { background-color:#3CB371; }
-    .availability { font-weight:bold; transition:0.5s; }
-    footer { background-color:#2E8B57; color:white; text-align:center; padding:15px; margin-top:20px; }
-    input, textarea { width:100%; padding:8px; margin:5px 0 15px 0; border-radius:4px; border:1px solid #ccc; }
-    .language-switch { position:absolute; top:20px; right:20px; }
-    .language-switch button { margin-left:10px; padding:5px 10px; cursor:pointer; border-radius:4px; border:none; background-color:#2E8B57; color:white; transition:0.3s; }
-    .language-switch button:hover { background-color:#3CB371; }
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+header {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/51/High_Tatras_view_from_Kvetnica.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+nav { background-color: #3CB371; padding: 10px; text-align: center; position: relative; }
+nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+.lang-switch { position: absolute; right: 10px; top: 10px; }
+.lang-switch button { margin-left: 5px; padding: 5px 10px; cursor: pointer; border: none; border-radius: 3px; background-color: white; font-weight: bold; }
+.container { padding: 20px; }
+.bicycle-row { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+.bicycle { flex: 1; min-width: 300px; border: 1px solid #ccc; padding: 15px; border-radius: 8px; position: relative; }
+.bicycle img { width: 100%; height: 350px; object-fit: contain; border-radius: 5px; background-color: #f0f0f0; }
+.reserve { background-color: #2E8B57; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; margin-top: 10px; font-weight: bold; transition: 0.3s; }
+.reserve:hover { background-color: #3CB371; }
+.availability { position: absolute; top: 10px; right: 10px; padding: 5px 10px; border-radius: 5px; font-weight: bold; color: white; }
+.available { background-color: green; animation: blink 1s infinite; }
+.unavailable { background-color: red; }
+@keyframes blink { 0%,50%,100%{opacity:1} 25%,75%{opacity:0.5} }
+input, textarea { width: 100%; padding: 8px; margin: 5px 0 15px 0; border-radius: 4px; border: 1px solid #ccc; }
 </style>
 </head>
 <body>
@@ -36,75 +37,78 @@
 <header>
     <h1>TatryBike - Požičovňa bicyklov</h1>
     <p>Horské bicykle priamo vo Vysokých Tatrách</p>
-    <div class="language-switch">
-        <button onclick="switchLanguage('sk')">SK</button>
-        <button onclick="switchLanguage('en')">EN</button>
-    </div>
 </header>
 
 <nav>
-    <a href="#home">Domov</a>
-    <a href="#bikes">Naša ponuka</a>
-    <a href="#contact">Kontakt</a>
+    <a href="#home" data-i18n="home">Domov</a>
+    <a href="#bikes" data-i18n="bikes">Naša ponuka</a>
+    <a href="#contact" data-i18n="contact">Kontakt</a>
+    <div class="lang-switch">
+        <button onclick="setLanguage('sk')">SK</button>
+        <button onclick="setLanguage('en')">EN</button>
+    </div>
 </nav>
 
 <div class="container" id="bikes">
-    <h2>Naša ponuka</h2>
+    <h2 data-i18n="ourBikes">Naša ponuka</h2>
 
-    <!-- Prvý typ bicykla, dve veľkosti vedľa seba -->
     <div class="bicycle-row">
-        <div class="bicycle">
-            <h3>Corratec Revo BOW M</h3>
+        <!-- Corratec Revo BOW M -->
+        <div class="bicycle" data-available="1">
+            <h3>Corratec Revo BOW – veľkosť M</h3>
             <img src="https://www.iko-sport.com/out/pictures/generated/product/1/1300_1300_90/corratec_revo_bow_bk28014_colo1_1603.jpg" alt="Corratec Revo BOW M">
-            <p>Dostupnosť: <span class="availability" data-count="1">1 ks</span></p>
+            <p>Špičkový horský bicykel, veľkosť M, ideálny pre náročné terény.</p>
+            <p><strong>Dostupnosť:</strong> <span class="availability available">1 ks</span></p>
             <p><strong>Cena:</strong> 49 €/deň</p>
-            <button class="reserve" onclick="reserveBike(this)">Rezervovať</button>
+            <button class="reserve" onclick="reserveBike(this,'Corratec Revo BOW M')">Rezervovať</button>
         </div>
-        <div class="bicycle">
-            <h3>Corratec Revo BOW L</h3>
+
+        <!-- Corratec Revo BOW L -->
+        <div class="bicycle" data-available="1">
+            <h3>Corratec Revo BOW – veľkosť L</h3>
             <img src="https://www.iko-sport.com/out/pictures/generated/product/1/1300_1300_90/corratec_revo_bow_bk28014_colo1_1603.jpg" alt="Corratec Revo BOW L">
-            <p>Dostupnosť: <span class="availability" data-count="1">1 ks</span></p>
+            <p>Špičkový horský bicykel, veľkosť L, ideálny pre vyšších cyklistov.</p>
+            <p><strong>Dostupnosť:</strong> <span class="availability available">1 ks</span></p>
             <p><strong>Cena:</strong> 49 €/deň</p>
-            <button class="reserve" onclick="reserveBike(this)">Rezervovať</button>
+            <button class="reserve" onclick="reserveBike(this,'Corratec Revo BOW L')">Rezervovať</button>
         </div>
     </div>
 
-    <!-- Druhý typ bicykla, jeden obrazok -->
-    <div class="bicycle-row">
-        <div class="bicycle">
-            <h3>Corratec X Vert Rock 26"</h3>
-            <img src="https://www.iko-sport.com/at/out/pictures/generated/product/1/1300_1300_90/corratec_x_vert_rock_bk29031_colo1_1288.png" alt="Corratec X Vert Rock 26">
-            <p>Dostupnosť: <span class="availability" data-count="1">1 ks</span></p>
-            <p><strong>Cena:</strong> 20 €/deň</p>
-            <button class="reserve" onclick="reserveBike(this)">Rezervovať</button>
-        </div>
+    <!-- Druhý bicykel -->
+    <div class="bicycle" data-available="1">
+        <h3>Corratec X Vert Rock 26"</h3>
+        <img src="https://www.iko-sport.com/at/out/pictures/generated/product/1/1300_1300_90/corratec_x_vert_rock_bk29031_colo1_1288.png" alt="Corratec X Vert Rock">
+        <p>Všestranný horský bicykel vhodný pre deti a mládež.</p>
+        <p><strong>Dostupnosť:</strong> <span class="availability available">1 ks</span></p>
+        <p><strong>Cena:</strong> 20 €/deň</p>
+        <button class="reserve" onclick="reserveBike(this,'Corratec X Vert Rock 26&quot;')">Rezervovať</button>
     </div>
 </div>
 
 <div class="container" id="contact">
-    <h2>Rezervácia / Kontakt</h2>
+    <h2 data-i18n="reservationContact">Rezervácia / Kontakt</h2>
     <form id="reservationForm" action="https://formspree.io/f/movnjrdl" method="POST">
-        <label for="name">Meno:</label>
+        <label for="name" data-i18n="nameLabel">Meno:</label>
         <input type="text" id="name" name="name" required>
 
-        <label for="email">Email:</label>
+        <label for="email" data-i18n="emailLabel">Email:</label>
         <input type="email" id="email" name="_replyto" required>
 
-        <label for="phone">Telefón:</label>
+        <label for="phone" data-i18n="phoneLabel">Telefón:</label>
         <input type="text" id="phone" name="phone">
 
-        <label for="bikeName">Vybraný bicykel:</label>
+        <label for="bikeName" data-i18n="bikeLabel">Vybraný bicykel:</label>
         <input type="text" id="bikeName" name="bikeName" readonly>
 
-        <label for="days">Počet dní:</label>
+        <label for="days" data-i18n="daysLabel">Počet dní:</label>
         <input type="number" id="days" name="days" min="1" value="1" required>
 
-        <label for="message">Správa / poznámky:</label>
+        <label for="message" data-i18n="messageLabel">Správa / poznámky:</label>
         <textarea id="message" name="message" rows="4"></textarea>
 
-        <button type="submit" class="reserve">Odoslať rezerváciu</button>
+        <button type="submit" class="reserve" data-i18n="sendButton">Odoslať rezerváciu</button>
     </form>
-    <p id="confirmation" style="color: green; font-weight: bold; display:none;">Vaša rezervácia bola odoslaná!</p>
+    <p id="confirmation" style="color: green; font-weight: bold; display:none;" data-i18n="confirmationMessage">Vaša rezervácia bola odoslaná!</p>
 </div>
 
 <footer>
@@ -112,50 +116,53 @@
 </footer>
 
 <script>
-function reserveBike(btn) {
-    const bikeDiv = btn.parentElement;
-    const bikeName = bikeDiv.querySelector('.bike-name').innerText;
-    document.getElementById('bikeName').value = bikeName;
+const translations = {
+  sk: {
+    home: "Domov", bikes: "Naša ponuka", contact: "Kontakt",
+    ourBikes: "Naša ponuka", reservationContact: "Rezervácia / Kontakt",
+    nameLabel: "Meno:", emailLabel: "Email:", phoneLabel: "Telefón:",
+    bikeLabel: "Vybraný bicykel:", daysLabel: "Počet dní:", messageLabel: "Správa / poznámky:",
+    sendButton: "Odoslať rezerváciu", confirmationMessage: "Vaša rezervácia bola odoslaná!"
+  },
+  en: {
+    home: "Home", bikes: "Our Bikes", contact: "Contact",
+    ourBikes: "Our Bikes", reservationContact: "Reservation / Contact",
+    nameLabel: "Name:", emailLabel: "Email:", phoneLabel: "Phone:",
+    bikeLabel: "Selected bike:", daysLabel: "Number of days:", messageLabel: "Message / Notes:",
+    sendButton: "Send Reservation", confirmationMessage: "Your reservation has been sent!"
+  }
+};
 
-    const availabilitySpan = bikeDiv.querySelector('.availability');
-    let count = parseInt(availabilitySpan.getAttribute('data-count'));
-    if(count > 0) {
-        count--;
-        availabilitySpan.setAttribute('data-count', count);
-        availabilitySpan.innerText = count > 0 ? count + ' ks' : 'Nedostupné';
-        availabilitySpan.style.color = count === 0 ? 'red' : 'green';
-    }
-    document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+function setLanguage(lang){
+    document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const key = el.getAttribute("data-i18n");
+        if(translations[lang][key]) el.innerText = translations[lang][key];
+    });
 }
 
-document.getElementById('reservationForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    document.getElementById('confirmation').style.display = 'block';
-    this.reset();
+// Rezervácia a zníženie dostupnosti
+function reserveBike(button,bikeName){
+    const container = button.closest('.bicycle');
+    let available = parseInt(container.getAttribute('data-available'));
+    if(available>0){
+        document.getElementById('bikeName').value = bikeName;
+        document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+        available--;
+        container.setAttribute('data-available',available);
+        const span = container.querySelector('.availability');
+        if(available>0){ span.innerText = available+' ks'; }
+        else { span.innerText = 'Nedostupné'; span.classList.remove('available'); span.classList.add('unavailable'); button.disabled=true; }
+    }
+}
+
+// Formspree
+document.getElementById('reservationForm').addEventListener('submit', function(e) {
+    // Odoslať formulár normálne
+    setTimeout(()=>{
+        document.getElementById('confirmation').style.display='block';
+        this.reset();
+    }, 100);
 });
-
-function switchLanguage(lang){
-    if(lang==='en'){
-        // Preklad do angličtiny
-        document.querySelector('header h1').innerText='TatryBike - Bike Rental';
-        document.querySelector('header p').innerText='Mountain bikes directly in the High Tatras';
-        document.querySelector('nav a[href="#home"]').innerText='Home';
-        document.querySelector('nav a[href="#bikes"]').innerText='Our Bikes';
-        document.querySelector('nav a[href="#contact"]').innerText='Contact';
-        document.getElementById('bikes').querySelector('h2').innerText='Our Bikes';
-        document.getElementById('contact').querySelector('h2').innerText='Reservation / Contact';
-        document.getElementById('name').previousSibling.textContent='Name:';
-        document.getElementById('email').previousSibling.textContent='Email:';
-        document.getElementById('phone').previousSibling.textContent='Phone:';
-        document.getElementById('bikeName').previousSibling.textContent='Selected Bike:';
-        document.getElementById('days').previousSibling.textContent='Number of days:';
-        document.getElementById('message').previousSibling.textContent='Message / notes:';
-        document.querySelector('button[type="submit"]').innerText='Send Reservation';
-        document.getElementById('confirmation').innerText='Your reservation has been sent!';
-    } else {
-        location.reload(); // Jednoduchý návrat na SK verziu
-    }
-}
 </script>
 
 </body>
