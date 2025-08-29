@@ -5,93 +5,103 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TatryBike - Požičovňa bicyklov</title>
 <style>
-body { font-family: Arial, sans-serif; margin:0; padding:0; }
-header {
+  body { font-family: Arial, sans-serif; margin:0; padding:0; }
+  header {
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/51/High_Tatras_view_from_Kvetnica.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    padding: 80px 20px;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-}
-nav { background-color: #3CB371; padding: 10px; text-align: center; }
-nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
-.language { position:absolute; top:10px; right:10px; }
-.language button { margin-left:5px; padding:5px 10px; cursor:pointer; border:none; border-radius:5px; font-weight:bold; }
-.container { padding:20px; }
-.bicycle { border:1px solid #ccc; padding:15px; margin-bottom:20px; border-radius:8px; }
-.bicycle img { width:300px; height:auto; border-radius:5px; }
-.reserve { background-color:#2E8B57; color:white; border:none; padding:10px 15px; cursor:pointer; border-radius:5px; margin-top:10px; font-weight:bold; }
-footer { background-color:#2E8B57; color:white; text-align:center; padding:15px; margin-top:20px; }
-input, textarea { width:100%; padding:8px; margin:5px 0 15px 0; border-radius:4px; border:1px solid #ccc; }
-.availability { font-weight:bold; color:#ff0000; }
+    background-size: cover; background-position: center;
+    color: white; padding: 80px 20px; text-align:center;
+    text-shadow:2px 2px 4px rgba(0,0,0,0.7); position: relative;
+  }
+  .lang-switch { position:absolute; top:20px; right:20px; }
+  .lang-switch button { margin-left:10px; padding:5px 10px; border-radius:5px; border:none; cursor:pointer; background-color:#3CB371; color:white; font-weight:bold; }
+  nav { background-color:#3CB371; padding:10px; text-align:center; }
+  nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
+  .container { padding:20px; }
+  .bikes-grid { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+  .bicycle { border:1px solid #ccc; padding:15px; border-radius:8px; width:300px; text-align:center; }
+  .bicycle img { width:100%; height:auto; border-radius:5px; }
+  .reserve { background-color:#2E8B57; color:white; border:none; padding:10px 15px; cursor:pointer; border-radius:5px; margin-top:10px; transition:0.3s; }
+  .reserve:hover { background-color:#3CB371; }
+  footer { background-color:#2E8B57; color:white; text-align:center; padding:15px; margin-top:20px; }
+  input, textarea { width:100%; padding:8px; margin:5px 0 15px 0; border-radius:4px; border:1px solid #ccc; }
+  .availability { font-weight:bold; margin-top:5px; display:block; }
+  #miniCalendar { display:flex; flex-wrap:wrap; gap:5px; justify-content:center; margin:15px 0; }
+  .day { width:40px; height:40px; display:flex; align-items:center; justify-content:center; border:1px solid #ccc; cursor:pointer; border-radius:4px; }
+  .day.unavailable { background-color:#f08080; color:white; cursor:default; }
+  .day.selected { background-color:#3CB371; color:white; }
 </style>
 </head>
 <body>
 
-<div class="language">
-  <button onclick="setLang('sk')">SK</button>
-  <button onclick="setLang('en')">EN</button>
-</div>
-
 <header>
-  <h1 id="header-title">TatryBike - Požičovňa bicyklov</h1>
-  <p id="header-subtitle">Horské bicykle priamo vo Vysokých Tatrách</p>
+  <div class="lang-switch">
+    <button onclick="setLanguage('sk')">SK</button>
+    <button onclick="setLanguage('en')">EN</button>
+  </div>
+  <h1 id="headerTitle">TatryBike - Požičovňa bicyklov</h1>
+  <p id="headerSubtitle">Horské bicykle priamo vo Vysokých Tatrách</p>
 </header>
 
 <nav>
-  <a href="#home" id="nav-home">Domov</a>
-  <a href="#bikes" id="nav-bikes">Naša ponuka</a>
-  <a href="#contact" id="nav-contact">Kontakt</a>
+  <a href="#home" id="navHome">Domov</a>
+  <a href="#bikes" id="navBikes">Naša ponuka</a>
+  <a href="#contact" id="navContact">Kontakt</a>
 </nav>
 
 <div class="container" id="bikes">
-  <h2 id="bikes-title">Naša ponuka</h2>
-
-  <div class="bicycle">
-    <h3 id="bike1-name">Corratec Revo BOW Green</h3>
-    <img src="https://www.iko-sport.com/out/pictures/generated/product/1/1300_1300_90/corratec_revo_bow_bk28014_colo1_1603.jpg" alt="Corratec Revo BOW BK28014">
-    <p id="bike1-desc">Špičkový horský bicykel s unikátnym BOW dizajnom, ideálny pre náročné terény a pretekárske využitie.</p>
-    <p><strong>Cena:</strong> <span id="bike1-price">49 €/deň</span> <span class="availability" id="bike1-availability">(2 ks dostupné)</span></p>
-    <button class="reserve" onclick="selectBike('Corratec Revo BOW Green')">Rezervovať</button>
-  </div>
-
-  <div class="bicycle">
-    <h3 id="bike2-name">Corratec X Vert Rock 26"</h3>
-    <img src="https://www.iko-sport.com/at/out/pictures/generated/product/1/1300_1300_90/corratec_x_vert_rock_bk29031_colo1_1288.png" alt="Corratec X Vert Rock">
-    <p id="bike2-desc">Naše horské bicykle sú vhodné pre jazdu v teréne aj pre deti. Bezpečnosť, výkon a zábava na každej trase.</p>
-    <p><strong>Cena:</strong> <span id="bike2-price">20 €/deň</span> <span class="availability" id="bike2-availability">(1 ks dostupné)</span></p>
-    <button class="reserve" onclick="selectBike('Corratec X Vert Rock 26&quot;')">Rezervovať</button>
+  <h2 id="bikesTitle">Naša ponuka</h2>
+  <label for="reservationDate" data-sk="Vyberte dátum rezervácie:" data-en="Select reservation date:">Vyberte dátum rezervácie:</label>
+  <input type="date" id="reservationDate" value="">
+  <div id="miniCalendar"></div>
+  <div class="bikes-grid">
+    <div class="bicycle">
+      <h3 data-sk="Corratec Revo BOW Green M" data-en="Corratec Revo BOW Green M">Corratec Revo BOW Green M</h3>
+      <img src="https://www.iko-sport.com/out/pictures/generated/product/1/1300_1300_90/corratec_revo_bow_bk28014_colo1_1603.jpg" alt="Corratec Revo BOW M">
+      <p data-sk="Špičkový horský bicykel, veľkosť M." data-en="Top mountain bike, size M.">Špičkový horský bicykel, veľkosť M.</p>
+      <span class="availability" data-bike="Corratec Revo BOW Green M">Načítavam dostupnosť...</span>
+      <button class="reserve" data-bike="Corratec Revo BOW Green M" onclick="document.getElementById('bikeName').value='Corratec Revo BOW Green M'; document.getElementById('contact').scrollIntoView();">Rezervovať</button>
+    </div>
+    <div class="bicycle">
+      <h3 data-sk="Corratec Revo BOW Green L" data-en="Corratec Revo BOW Green L">Corratec Revo BOW Green L</h3>
+      <img src="https://www.iko-sport.com/out/pictures/generated/product/1/1300_1300_90/corratec_revo_bow_bk28014_colo1_1603.jpg" alt="Corratec Revo BOW L">
+      <p data-sk="Špičkový horský bicykel, veľkosť L." data-en="Top mountain bike, size L.">Špičkový horský bicykel, veľkosť L.</p>
+      <span class="availability" data-bike="Corratec Revo BOW Green L">Načítavam dostupnosť...</span>
+      <button class="reserve" data-bike="Corratec Revo BOW Green L" onclick="document.getElementById('bikeName').value='Corratec Revo BOW Green L'; document.getElementById('contact').scrollIntoView();">Rezervovať</button>
+    </div>
+    <div class="bicycle">
+      <h3 data-sk='Corratec X Vert Rock 26"' data-en='Corratec X Vert Rock 26"'>Corratec X Vert Rock 26"</h3>
+      <img src="https://www.iko-sport.com/at/out/pictures/generated/product/1/1300_1300_90/corratec_x_vert_rock_bk29031_colo1_1288.png" alt="Corratec X Vert Rock">
+      <p data-sk="Horský bicykel pre deti a začiatočníkov." data-en="Mountain bike for kids and beginners.">Horský bicykel pre deti a začiatočníkov.</p>
+      <span class="availability" data-bike='Corratec X Vert Rock 26"'>Načítavam dostupnosť...</span>
+      <button class="reserve" data-bike='Corratec X Vert Rock 26"' onclick="document.getElementById('bikeName').value='Corratec X Vert Rock 26"'; document.getElementById('contact').scrollIntoView();">Rezervovať</button>
+    </div>
   </div>
 </div>
 
 <div class="container" id="contact">
-  <h2 id="contact-title">Rezervácia / Kontakt</h2>
+  <h2 id="contactTitle">Rezervácia / Kontakt</h2>
   <form id="reservationForm" action="https://formspree.io/f/movnjrdl" method="POST">
-    <label for="name" id="label-name">Meno:</label>
+    <label for="name" data-sk="Meno:" data-en="Name:">Meno:</label>
     <input type="text" id="name" name="name" required>
 
-    <label for="email" id="label-email">Email:</label>
+    <label for="email" data-sk="Email:" data-en="Email:">Email:</label>
     <input type="email" id="email" name="_replyto" required>
 
-    <label for="phone" id="label-phone">Telefón:</label>
+    <label for="phone" data-sk="Telefón:" data-en="Phone:">Telefón:</label>
     <input type="text" id="phone" name="phone">
 
-    <label for="bikeName" id="label-bike">Vybraný bicykel:</label>
+    <label for="bikeName" data-sk="Vybraný bicykel:" data-en="Selected Bike:">Vybraný bicykel:</label>
     <input type="text" id="bikeName" name="bikeName" readonly>
 
-    <label for="days" id="label-days">Počet dní:</label>
+    <label for="days" data-sk="Počet dní:" data-en="Number of Days:">Počet dní:</label>
     <input type="number" id="days" name="days" min="1" value="1" required>
 
-    <label for="message" id="label-message">Správa / poznámky:</label>
+    <label for="message" data-sk="Správa / poznámky:" data-en="Message / Notes:">Správa / poznámky:</label>
     <textarea id="message" name="message" rows="4"></textarea>
 
-    <input type="hidden" name="_redirect" id="form-redirect" value="thankyou.html">
-
-    <button type="submit" class="reserve" id="submit-btn">Odoslať rezerváciu</button>
+    <button type="submit" class="reserve" data-sk="Odoslať rezerváciu" data-en="Submit Reservation">Odoslať rezerváciu</button>
   </form>
-  <p id="confirmation" style="color: green; font-weight: bold; display:none;">Vaša rezervácia bola odoslaná!</p>
+  <p id="confirmation" style="color: green; font-weight: bold; display:none;" data-sk="Vaša rezervácia bola odoslaná!" data-en="Your reservation has been sent!">Vaša rezervácia bola odoslaná!</p>
 </div>
 
 <footer>
@@ -99,90 +109,106 @@ input, textarea { width:100%; padding:8px; margin:5px 0 15px 0; border-radius:4p
 </footer>
 
 <script>
-let lang = 'sk';
-const texts = {
-  sk: {
-    headerTitle: "TatryBike - Požičovňa bicyklov",
-    headerSubtitle: "Horské bicykle priamo vo Vysokých Tatrách",
-    navHome: "Domov",
-    navBikes: "Naša ponuka",
-    navContact: "Kontakt",
-    bikesTitle: "Naša ponuka",
-    bike1Name: "Corratec Revo BOW Green",
-    bike1Desc: "Špičkový horský bicykel s unikátnym BOW dizajnom, ideálny pre náročné terény a pretekárske využitie.",
-    bike1Price: "49 €/deň",
-    bike1Avail: "(2 ks dostupné)",
-    bike2Name: "Corratec X Vert Rock 26\"",
-    bike2Desc: "Naše horské bicykle sú vhodné pre jazdu v teréne aj pre deti. Bezpečnosť, výkon a zábava na každej trase.",
-    bike2Price: "20 €/deň",
-    bike2Avail: "(1 ks dostupné)",
-    contactTitle: "Rezervácia / Kontakt",
-    labelName: "Meno:",
-    labelEmail: "Email:",
-    labelPhone: "Telefón:",
-    labelBike: "Vybraný bicykel:",
-    labelDays: "Počet dní:",
-    labelMessage: "Správa / poznámky:",
-    submitBtn: "Odoslať rezerváciu"
-  },
-  en: {
-    headerTitle: "TatryBike - Bike Rental",
-    headerSubtitle: "Mountain bikes directly in the High Tatras",
-    navHome: "Home",
-    navBikes: "Bikes",
-    navContact: "Contact",
-    bikesTitle: "Our Bikes",
-    bike1Name: "Corratec Revo BOW Green",
-    bike1Desc: "High-end mountain bike with unique BOW design, ideal for challenging terrains and racing.",
-    bike1Price: "49 €/day",
-    bike1Avail: "(2 available)",
-    bike2Name: "Corratec X Vert Rock 26\"",
-    bike2Desc: "Our mountain bikes are suitable for terrain riding and kids. Safety, performance, and fun on every trail.",
-    bike2Price: "20 €/day",
-    bike2Avail: "(1 available)",
-    contactTitle: "Reservation / Contact",
-    labelName: "Name:",
-    labelEmail: "Email:",
-    labelPhone: "Phone:",
-    labelBike: "Selected bike:",
-    labelDays: "Number of days:",
-    labelMessage: "Message / Notes:",
-    submitBtn: "Send Reservation"
-  }
+let language='sk';
+function setLanguage(lang){
+  language=lang;
+  document.querySelectorAll('[data-sk]').forEach(el=>{
+    if(el.dataset.sk) el.textContent=el.dataset[lang];
+  });
+}
+
+// Google Calendar API
+const calendarId='5486af0524d26659ac947e30fa4ff106a97c9655316fa0600f02104774e23693@group.calendar.google.com';
+const apiKey='AIzaSyB27rB-XDuKbUxYwGJBeS6z7EH1FZCiaKk';
+
+// Bikes availability
+let bikes = {
+  'Corratec Revo BOW Green M': 1,
+  'Corratec Revo BOW Green L': 1,
+  'Corratec X Vert Rock 26"': 1
 };
 
-function setLang(l) {
-  lang = l;
-  document.getElementById('header-title').innerText = texts[l].headerTitle;
-  document.getElementById('header-subtitle').innerText = texts[l].headerSubtitle;
-  document.getElementById('nav-home').innerText = texts[l].navHome;
-  document.getElementById('nav-bikes').innerText = texts[l].navBikes;
-  document.getElementById('nav-contact').innerText = texts[l].navContact;
-  document.getElementById('bikes-title').innerText = texts[l].bikesTitle;
-  document.getElementById('bike1-name').innerText = texts[l].bike1Name;
-  document.getElementById('bike1-desc').innerText = texts[l].bike1Desc;
-  document.getElementById('bike1-price').innerText = texts[l].bike1Price;
-  document.getElementById('bike1-availability').innerText = texts[l].bike1Avail;
-  document.getElementById('bike2-name').innerText = texts[l].bike2Name;
-  document.getElementById('bike2-desc').innerText = texts[l].bike2Desc;
-  document.getElementById('bike2-price').innerText = texts[l].bike2Price;
-  document.getElementById('bike2-availability').innerText = texts[l].bike2Avail;
-  document.getElementById('contact-title').innerText = texts[l].contactTitle;
-  document.getElementById('label-name').innerText = texts[l].labelName;
-  document.getElementById('label-email').innerText = texts[l].labelEmail;
-  document.getElementById('label-phone').innerText = texts[l].labelPhone;
-  document.getElementById('label-bike').innerText = texts[l].labelBike;
-  document.getElementById('label-days').innerText = texts[l].labelDays;
-  document.getElementById('label-message').innerText = texts[l].labelMessage;
-  document.getElementById('submit-btn').innerText = texts[l].submitBtn;
+function updateAvailability(date){
+  const bikeKeys=Object.keys(bikes);
+  bikeKeys.forEach(key=>bikes[key]=1);
 
-  document.getElementById('form-redirect').value = l==='sk' ? 'thankyou.html' : 'thankyou-en.html';
+  fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
+    .then(res=>res.json())
+    .then(data=>{
+      data.items.forEach(event=>{
+        const eventDate=event.start.date || event.start.dateTime?.split('T')[0];
+        if(date && eventDate===date){
+          const name=event.summary;
+          if(bikes[name]!==undefined) bikes[name]--;
+        }
+      });
+
+      // update UI
+      bikeKeys.forEach(bike=>{
+        const btn=document.querySelector(`button[data-bike="${bike}"]`);
+        const msg=document.querySelector(`span[data-bike="${bike}"]`);
+        if(btn && msg){
+          if(bikes[bike]>0){
+            btn.disabled=false;
+            msg.textContent=language==='sk'?`Dostupné: ${bikes[bike]}`:`Available: ${bikes[bike]}`;
+            msg.style.color='green';
+          }else{
+            btn.disabled=true;
+            msg.textContent=language==='sk'?`Nedostupné`:`Unavailable`;
+            msg.style.color='red';
+          }
+        }
+      });
+      renderMiniCalendar(date, data.items);
+    }).catch(err=>console.error('Chyba pri načítaní kalendára:', err));
 }
 
-function selectBike(name) {
-  document.getElementById('bikeName').value = name;
+function renderMiniCalendar(selectedDate, events){
+  const miniCal=document.getElementById('miniCalendar');
+  miniCal.innerHTML='';
+  const today=new Date(selectedDate);
+  const year=today.getFullYear();
+  const month=today.getMonth();
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+
+  let eventDates=events.map(ev=>ev.start.date || ev.start.dateTime?.split('T')[0]);
+
+  for(let i=0;i<firstDay;i++) miniCal.innerHTML+='<div class="day" style="visibility:hidden"></div>';
+
+  for(let d=1; d<=daysInMonth; d++){
+    const dateStr=new Date(year,month,d).toISOString().split('T')[0];
+    const dayDiv=document.createElement('div');
+    dayDiv.classList.add('day');
+    if(eventDates.includes(dateStr)) dayDiv.classList.add('unavailable');
+    if(dateStr===selectedDate) dayDiv.classList.add('selected');
+    dayDiv.textContent=d;
+    dayDiv.onclick=()=>{
+      if(!dayDiv.classList.contains('unavailable')){
+        document.getElementById('reservationDate').value=dateStr;
+        updateAvailability(dateStr);
+      }
+    };
+    miniCal.appendChild(dayDiv);
+  }
 }
+
+// default today
+const today=new Date().toISOString().split('T')[0];
+document.getElementById('reservationDate').value=today;
+updateAvailability(today);
+
+document.getElementById('reservationDate').addEventListener('change',function(){
+  updateAvailability(this.value);
+});
+
+// Formspree submit
+document.getElementById('reservationForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  this.submit();
+  document.getElementById('confirmation').style.display='block';
+  this.reset();
+});
 </script>
-
 </body>
 </html>
