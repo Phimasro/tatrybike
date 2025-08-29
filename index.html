@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TatryBike - Požičovňa bicyklov</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+header {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/51/High_Tatras_view_from_Kvetnica.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+nav { background-color: #3CB371; padding: 10px; text-align: center; }
+nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+.container { padding: 20px; }
+.bicycle { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px; text-align:center;}
+.bicycle img { width: 100%; height: 350px; object-fit: contain; border-radius: 5px; background-color: #f0f0f0;}
+.reserve { background-color: #2E8B57; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; margin-top: 10px; font-weight:bold;}
+.reserve.disabled { background-color: #aaa; cursor: not-allowed;}
+footer { background-color: #2E8B57; color: white; text-align: center; padding: 15px; margin-top: 20px; }
+input, textarea { width: 100%; padding: 8px; margin: 5px 0 15px 0; border-radius: 4px; border: 1px solid #ccc; }
+.availability { font-weight:bold; margin-top:5px; }
+</style>
+</head>
+<body>
+
+<header>
+<h1>TatryBike - Požičovňa bicyklov</h1>
+<p>Horské bicykle priamo vo Vysokých Tatrách</p>
+</header>
+
+<nav>
+<a href="#home">Domov</a>
+<a href="#bikes">Naša ponuka</a>
+<a href="#contact">Kontakt</a>
+</nav>
+
+<div class="container" id="bikes">
+<h2>Naša ponuka</h2>
+
+<div class="bicycle">
+    <h3>Corratec Revo BOW Green</h3>
+    <img src="https://www.iko-sport.com/out/pictures/generated/product/1/1300_1300_90/corratec_revo_bow_bk28014_colo1_1603.jpg" alt="Corratec Revo BOW BK28014">
+    <p>Špičkový horský bicykel s unikátnym BOW dizajnom, ideálny pre náročné terény.</p>
+    <p><strong>Cena:</strong> 25 €/deň</p>
+    <p class="availability" id="bike1Stock">Dostupné: 2 ks</p>
+    <button class="reserve" id="bike1Btn" onclick="selectBike('Corratec Revo BOW Green')">Rezervovať</button>
+</div>
+
+<div class="bicycle">
+    <h3>Corratec X Vert Rock 26"</h3>
+    <img src="https://www.iko-sport.com/at/out/pictures/generated/product/1/1300_1300_90/corratec_x_vert_rock_bk29031_colo1_1288.png" alt="Corratec X Vert Rock">
+    <p>Horský bicykel vhodný pre deti a začínajúcich cyklistov.</p>
+    <p><strong>Cena:</strong> 15 €/deň</p>
+    <p class="availability" id="bike2Stock">Dostupné: 1 ks</p>
+    <button class="reserve" id="bike2Btn" onclick="selectBike('Corratec X Vert Rock 26&quot;')">Rezervovať</button>
+</div>
+</div>
+
+<div class="container" id="contact">
+<h2>Rezervácia / Kontakt</h2>
+<form id="reservationForm" action="https://formspree.io/f/movnjrdl" method="POST">
+<label for="name">Meno:</label>
+<input type="text" id="name" name="name" required>
+
+<label for="email">Email:</label>
+<input type="email" id="email" name="_replyto" required>
+
+<label for="phone">Telefón:</label>
+<input type="text" id="phone" name="phone">
+
+<label for="bikeName">Vybraný bicykel:</label>
+<input type="text" id="bikeName" name="bikeName" readonly>
+
+<label for="days">Počet dní:</label>
+<input type="number" id="days" name="days" min="1" value="1" required>
+
+<label for="message">Správa / poznámky:</label>
+<textarea id="message" name="message" rows="4"></textarea>
+
+<button type="submit" class="reserve">Odoslať rezerváciu</button>
+</form>
+<p id="confirmation" style="color: green; font-weight: bold; display:none;">Vaša rezervácia bola odoslaná!</p>
+</div>
+
+<footer>
+<p>&copy; 2025 TatryBike. Všetky práva vyhradené.</p>
+</footer>
+
+<script>
+// Počet bicyklov
+let stock = {
+    bike1: 2,
+    bike2: 1
+};
+
+function updateUI() {
+    document.getElementById('bike1Stock').innerText = `Dostupné: ${stock.bike1} ks`;
+    document.getElementById('bike2Stock').innerText = `Dostupné: ${stock.bike2} ks`;
+    
+    document.getElementById('bike1Btn').classList.toggle('disabled', stock.bike1<=0);
+    document.getElementById('bike2Btn').classList.toggle('disabled', stock.bike2<=0);
+}
+
+function selectBike(name) {
+    document.getElementById('bikeName').value = name;
+    document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+}
+
+document.getElementById('reservationForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const bike = document.getElementById('bikeName').value;
+    if(bike === 'Corratec Revo BOW Green' && stock.bike1>0) stock.bike1--;
+    if(bike === 'Corratec X Vert Rock 26"' && stock.bike2>0) stock.bike2--;
+    updateUI();
+    document.getElementById('confirmation').style.display='block';
+    this.reset();
+});
+
+updateUI();
+</script>
+
+</body>
+</html>
