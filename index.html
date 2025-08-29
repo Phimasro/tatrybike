@@ -5,216 +5,158 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TatryBike - Požičovňa bicyklov</title>
 <style>
-body { font-family: Arial, sans-serif; margin:0; padding:0; }
-header {
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/51/High_Tatras_view_from_Kvetnica.jpg');
-  background-size: cover;
-  background-position: center;
-  color: white;
-  padding: 80px 20px;
-  text-align: center;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-  position: relative;
-}
-.lang-switch { position:absolute; top:20px; right:20px; }
-.lang-switch button { background:transparent; color:white; border:none; font-weight:bold; cursor:pointer; margin-left:10px; font-size:16px; }
-
-nav { background-color:#3CB371; padding:10px; text-align:center; }
-nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
-
-.container { padding:20px; }
-
-.bicycle-row { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
-.bicycle { border:1px solid #ccc; padding:15px; border-radius:8px; width:320px; text-align:center; }
-.bicycle img { width:100%; height:250px; object-fit:contain; border-radius:5px; }
-
-.reserve { background-color:#2E8B57; color:white; border:none; padding:10px 15px; cursor:pointer; border-radius:5px; margin-top:10px; transition:0.3s; }
-.reserve:hover { background-color:#3CB371; }
-
-.availability { font-weight:bold; color:green; transition:0.5s; }
-
-footer { background-color:#2E8B57; color:white; text-align:center; padding:15px; margin-top:20px; }
-
-.hidden { display:none; }
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }
+    header {
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/51/High_Tatras_view_from_Kvetnica.jpg');
+        background-size: cover;
+        background-position: center;
+        color:white;
+        padding:80px 20px;
+        text-align:center;
+        text-shadow:2px 2px 4px rgba(0,0,0,0.7);
+    }
+    nav { background-color:#3CB371; padding:10px; text-align:center; }
+    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
+    .container { padding:20px; }
+    .bicycle-row { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-bottom:20px; }
+    .bicycle { border:1px solid #ccc; padding:15px; border-radius:8px; width:320px; text-align:center; }
+    .bicycle img { width:100%; height:250px; object-fit:contain; border-radius:5px; }
+    .reserve { background-color:#2E8B57; color:white; border:none; padding:12px 18px; cursor:pointer; border-radius:5px; margin-top:10px; font-size:16px; transition:0.3s; }
+    .reserve:hover { background-color:#3CB371; }
+    .availability { font-weight:bold; transition:0.5s; }
+    footer { background-color:#2E8B57; color:white; text-align:center; padding:15px; margin-top:20px; }
+    input, textarea { width:100%; padding:8px; margin:5px 0 15px 0; border-radius:4px; border:1px solid #ccc; }
+    .language-switch { position:absolute; top:20px; right:20px; }
+    .language-switch button { margin-left:10px; padding:5px 10px; cursor:pointer; border-radius:4px; border:none; background-color:#2E8B57; color:white; transition:0.3s; }
+    .language-switch button:hover { background-color:#3CB371; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1 id="title">TatryBike - Požičovňa bicyklov</h1>
-  <p id="subtitle">Horské bicykle priamo vo Vysokých Tatrách</p>
-  <div class="lang-switch">
-    <button onclick="switchLang('sk')">SK</button> | 
-    <button onclick="switchLang('en')">EN</button>
-  </div>
+    <h1>TatryBike - Požičovňa bicyklov</h1>
+    <p>Horské bicykle priamo vo Vysokých Tatrách</p>
+    <div class="language-switch">
+        <button onclick="switchLanguage('sk')">SK</button>
+        <button onclick="switchLanguage('en')">EN</button>
+    </div>
 </header>
 
 <nav>
-  <a href="#bikes" id="nav-bikes">Naša ponuka</a>
-  <a href="#contact" id="nav-contact">Kontakt</a>
+    <a href="#home">Domov</a>
+    <a href="#bikes">Naša ponuka</a>
+    <a href="#contact">Kontakt</a>
 </nav>
 
 <div class="container" id="bikes">
-  <h2 id="bikes-title">Naša ponuka</h2>
+    <h2>Naša ponuka</h2>
 
-  <div class="bicycle-row">
-    <div class="bicycle">
-      <h3 class="bike-name">Corratec Revo BOW M</h3>
-      <img src="https://www.iko-sport.com/out/pictures/generated/product/1/1300_1300_90/corratec_revo_bow_bk28014_colo1_1603.jpg" alt="Corratec Revo BOW M">
-      <p id="avail1">Dostupnosť: <span class="availability" data-count="1">1 ks</span></p>
-      <p><strong id="price1">Cena:</strong> 49 €/deň</p>
-      <button class="reserve" data-bike="Corratec Revo BOW M">Rezervovať</button>
+    <!-- Prvý typ bicykla, dve veľkosti vedľa seba -->
+    <div class="bicycle-row">
+        <div class="bicycle">
+            <h3>Corratec Revo BOW M</h3>
+            <img src="https://www.iko-sport.com/out/pictures/generated/product/1/1300_1300_90/corratec_revo_bow_bk28014_colo1_1603.jpg" alt="Corratec Revo BOW M">
+            <p>Dostupnosť: <span class="availability" data-count="1">1 ks</span></p>
+            <p><strong>Cena:</strong> 49 €/deň</p>
+            <button class="reserve" onclick="reserveBike(this)">Rezervovať</button>
+        </div>
+        <div class="bicycle">
+            <h3>Corratec Revo BOW L</h3>
+            <img src="https://www.iko-sport.com/out/pictures/generated/product/1/1300_1300_90/corratec_revo_bow_bk28014_colo1_1603.jpg" alt="Corratec Revo BOW L">
+            <p>Dostupnosť: <span class="availability" data-count="1">1 ks</span></p>
+            <p><strong>Cena:</strong> 49 €/deň</p>
+            <button class="reserve" onclick="reserveBike(this)">Rezervovať</button>
+        </div>
     </div>
 
-    <div class="bicycle">
-      <h3 class="bike-name">Corratec Revo BOW L</h3>
-      <img src="https://www.iko-sport.com/out/pictures/generated/product/1/1300_1300_90/corratec_revo_bow_bk28014_colo1_1603.jpg" alt="Corratec Revo BOW L">
-      <p id="avail2">Dostupnosť: <span class="availability" data-count="1">1 ks</span></p>
-      <p><strong id="price2">Cena:</strong> 49 €/deň</p>
-      <button class="reserve" data-bike="Corratec Revo BOW L">Rezervovať</button>
+    <!-- Druhý typ bicykla, jeden obrazok -->
+    <div class="bicycle-row">
+        <div class="bicycle">
+            <h3>Corratec X Vert Rock 26"</h3>
+            <img src="https://www.iko-sport.com/at/out/pictures/generated/product/1/1300_1300_90/corratec_x_vert_rock_bk29031_colo1_1288.png" alt="Corratec X Vert Rock 26">
+            <p>Dostupnosť: <span class="availability" data-count="1">1 ks</span></p>
+            <p><strong>Cena:</strong> 20 €/deň</p>
+            <button class="reserve" onclick="reserveBike(this)">Rezervovať</button>
+        </div>
     </div>
-  </div>
-
-  <div class="bicycle">
-    <h3 class="bike-name">Corratec X Vert Rock 26"</h3>
-    <img src="https://www.iko-sport.com/at/out/pictures/generated/product/1/1300_1300_90/corratec_x_vert_rock_bk29031_colo1_1288.png" alt="Corratec X Vert Rock 26">
-    <p id="avail3">Dostupnosť: <span class="availability" data-count="1">1 ks</span></p>
-    <p><strong id="price3">Cena:</strong> 20 €/deň</p>
-    <button class="reserve" data-bike="Corratec X Vert Rock 26">Rezervovať</button>
-  </div>
 </div>
 
 <div class="container" id="contact">
-  <h2 id="contact-title">Rezervácia / Kontakt</h2>
-  <form id="reservationForm" action="https://formspree.io/f/movnjrdl" method="POST">
-    <label for="name" id="lbl-name">Meno:</label>
-    <input type="text" id="name" name="name" required>
-    <label for="email" id="lbl-email">Email:</label>
-    <input type="email" id="email" name="_replyto" required>
-    <label for="phone" id="lbl-phone">Telefón:</label>
-    <input type="text" id="phone" name="phone">
-    <label for="bikeName" id="lbl-bike">Vybraný bicykel:</label>
-    <input type="text" id="bikeName" name="bikeName" readonly>
-    <label for="days" id="lbl-days">Počet dní:</label>
-    <input type="number" id="days" name="days" min="1" value="1" required>
-    <label for="message" id="lbl-msg">Správa / poznámky:</label>
-    <textarea id="message" name="message" rows="4"></textarea>
-    <button type="submit" class="reserve" id="submitBtn">Odoslať rezerváciu</button>
-  </form>
-  <p id="confirmation" style="color: green; font-weight: bold; display:none;">Vaša rezervácia bola odoslaná!</p>
+    <h2>Rezervácia / Kontakt</h2>
+    <form id="reservationForm" action="https://formspree.io/f/movnjrdl" method="POST">
+        <label for="name">Meno:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="_replyto" required>
+
+        <label for="phone">Telefón:</label>
+        <input type="text" id="phone" name="phone">
+
+        <label for="bikeName">Vybraný bicykel:</label>
+        <input type="text" id="bikeName" name="bikeName" readonly>
+
+        <label for="days">Počet dní:</label>
+        <input type="number" id="days" name="days" min="1" value="1" required>
+
+        <label for="message">Správa / poznámky:</label>
+        <textarea id="message" name="message" rows="4"></textarea>
+
+        <button type="submit" class="reserve">Odoslať rezerváciu</button>
+    </form>
+    <p id="confirmation" style="color: green; font-weight: bold; display:none;">Vaša rezervácia bola odoslaná!</p>
 </div>
 
 <footer>
-  <p>&copy; 2025 TatryBike. Všetky práva vyhradené.</p>
+    <p>&copy; 2025 TatryBike. Všetky práva vyhradené.</p>
 </footer>
 
 <script>
-const translations = {
-  en: {
-    title: "TatryBike - Bike Rental",
-    subtitle: "Mountain bikes directly in the High Tatras",
-    navBikes: "Our Bikes",
-    navContact: "Contact",
-    bikesTitle: "Our Bikes",
-    avail1: "Availability: 1 pc",
-    avail2: "Availability: 1 pc",
-    avail3: "Availability: 1 pc",
-    price1: "Price:",
-    price2: "Price:",
-    price3: "Price:",
-    contactTitle: "Reservation / Contact",
-    lblName: "Name:",
-    lblEmail: "Email:",
-    lblPhone: "Phone:",
-    lblBike: "Selected Bike:",
-    lblDays: "Number of Days:",
-    lblMsg: "Message / Notes:",
-    submitBtn: "Send Reservation",
-    confirm: "Your reservation has been sent!",
-    reserve: "Reserve"
-  },
-  sk: {
-    title: "TatryBike - Požičovňa bicyklov",
-    subtitle: "Horské bicykle priamo vo Vysokých Tatrách",
-    navBikes: "Naša ponuka",
-    navContact: "Kontakt",
-    bikesTitle: "Naša ponuka",
-    avail1: "Dostupnosť: 1 ks",
-    avail2: "Dostupnosť: 1 ks",
-    avail3: "Dostupnosť: 1 ks",
-    price1: "Cena:",
-    price2: "Cena:",
-    price3: "Cena:",
-    contactTitle: "Rezervácia / Kontakt",
-    lblName: "Meno:",
-    lblEmail: "Email:",
-    lblPhone: "Telefón:",
-    lblBike: "Vybraný bicykel:",
-    lblDays: "Počet dní:",
-    lblMsg: "Správa / poznámky:",
-    submitBtn: "Odoslať rezerváciu",
-    confirm: "Vaša rezervácia bola odoslaná!",
-    reserve: "Rezervovať"
-  }
-};
+function reserveBike(btn) {
+    const bikeDiv = btn.parentElement;
+    const bikeName = bikeDiv.querySelector('.bike-name').innerText;
+    document.getElementById('bikeName').value = bikeName;
 
-function switchLang(lang) {
-  document.getElementById('title').textContent = translations[lang].title;
-  document.getElementById('subtitle').textContent = translations[lang].subtitle;
-  document.getElementById('nav-bikes').textContent = translations[lang].navBikes;
-  document.getElementById('nav-contact').textContent = translations[lang].navContact;
-  document.getElementById('bikes-title').textContent = translations[lang].bikesTitle;
-  document.getElementById('avail1').textContent = translations[lang].avail1;
-  document.getElementById('avail2').textContent = translations[lang].avail2;
-  document.getElementById('avail3').textContent = translations[lang].avail3;
-  document.getElementById('price1').textContent = translations[lang].price1;
-  document.getElementById('price2').textContent = translations[lang].price2;
-  document.getElementById('price3').textContent = translations[lang].price3;
-  document.getElementById('contact-title').textContent = translations[lang].contactTitle;
-  document.getElementById('lbl-name').textContent = translations[lang].lblName;
-  document.getElementById('lbl-email').textContent = translations[lang].lblEmail;
-  document.getElementById('lbl-phone').textContent = translations[lang].lblPhone;
-  document.getElementById('lbl-bike').textContent = translations[lang].lblBike;
-  document.getElementById('lbl-days').textContent = translations[lang].lblDays;
-  document.getElementById('lbl-msg').textContent = translations[lang].lblMsg;
-  document.getElementById('submitBtn').textContent = translations[lang].submitBtn;
+    const availabilitySpan = bikeDiv.querySelector('.availability');
+    let count = parseInt(availabilitySpan.getAttribute('data-count'));
+    if(count > 0) {
+        count--;
+        availabilitySpan.setAttribute('data-count', count);
+        availabilitySpan.innerText = count > 0 ? count + ' ks' : 'Nedostupné';
+        availabilitySpan.style.color = count === 0 ? 'red' : 'green';
+    }
+    document.getElementById('contact').scrollIntoView({behavior:'smooth'});
 }
 
-document.querySelectorAll('.reserve').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const bike = btn.getAttribute('data-bike');
-    document.getElementById('bikeName').value = bike;
-    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-  });
-});
-
-document.getElementById('reservationForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const form = e.target;
-  const data = {
-    name: form.name.value,
-    _replyto: form.email.value,
-    phone: form.phone.value,
-    bikeName: form.bikeName.value,
-    days: form.days.value,
-    message: form.message.value
-  };
-  
-  const response = await fetch(form.action, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
-
-  if (response.ok) {
+document.getElementById('reservationForm').addEventListener('submit', function(e){
+    e.preventDefault();
     document.getElementById('confirmation').style.display = 'block';
-    form.reset();
-  } else {
-    alert('Error sending reservation!');
-  }
+    this.reset();
 });
+
+function switchLanguage(lang){
+    if(lang==='en'){
+        // Preklad do angličtiny
+        document.querySelector('header h1').innerText='TatryBike - Bike Rental';
+        document.querySelector('header p').innerText='Mountain bikes directly in the High Tatras';
+        document.querySelector('nav a[href="#home"]').innerText='Home';
+        document.querySelector('nav a[href="#bikes"]').innerText='Our Bikes';
+        document.querySelector('nav a[href="#contact"]').innerText='Contact';
+        document.getElementById('bikes').querySelector('h2').innerText='Our Bikes';
+        document.getElementById('contact').querySelector('h2').innerText='Reservation / Contact';
+        document.getElementById('name').previousSibling.textContent='Name:';
+        document.getElementById('email').previousSibling.textContent='Email:';
+        document.getElementById('phone').previousSibling.textContent='Phone:';
+        document.getElementById('bikeName').previousSibling.textContent='Selected Bike:';
+        document.getElementById('days').previousSibling.textContent='Number of days:';
+        document.getElementById('message').previousSibling.textContent='Message / notes:';
+        document.querySelector('button[type="submit"]').innerText='Send Reservation';
+        document.getElementById('confirmation').innerText='Your reservation has been sent!';
+    } else {
+        location.reload(); // Jednoduchý návrat na SK verziu
+    }
+}
 </script>
 
 </body>
 </html>
-
